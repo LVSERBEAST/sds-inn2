@@ -22,11 +22,18 @@ public class Inventory : IInventory
         var items = _itemProvider.GetItems();
 
         foreach (var item in items)
-        {       
-            Type itemType = _itemDictionary.ItemTypes[item.Name];
-            UpdatableItem updatableItem = new(item);
-            var itemInstance = Activator.CreateInstance(itemType, updatableItem) as IUpdatableItem;
-            itemInstance?.Update();
+        {
+            try
+            {
+                Type itemType = _itemDictionary.ItemTypes[item.Name];
+                UpdatableItem updatableItem = new(item);
+                var itemInstance = Activator.CreateInstance(itemType, updatableItem) as IUpdatableItem;
+                itemInstance?.Update();
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

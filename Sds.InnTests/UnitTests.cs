@@ -216,5 +216,27 @@ namespace Sds.InnTests
 
             Assert.Equal(0, item.Quality);
         }
+
+        [Fact]
+        public void ItemName_IsSpelledWrong_Fails()
+        {
+            Item item = new("Sulfurus", 10, 80);
+            TestItemProvider testItemProvider = new(new List<Item> { item });
+            ItemTypeDictionary itemDictionary = new ItemTypeDictionary();
+            Inventory inventory = new(testItemProvider, itemDictionary);
+
+            Assert.Throws<KeyNotFoundException>(() => inventory.UpdateQuality());
+        }
+
+        [Fact]
+        public void ItemName_IsEmptyString_Fails()
+        {
+            Item item = new("", 0, 3);
+            TestItemProvider testItemProvider = new(new List<Item> { item });
+            ItemTypeDictionary itemDictionary = new ItemTypeDictionary();
+            Inventory inventory = new(testItemProvider, itemDictionary);
+
+            Assert.Throws<KeyNotFoundException>(() => inventory.UpdateQuality());
+        }
     }
 }
