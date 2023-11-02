@@ -20,18 +20,13 @@ public class Inventory : IInventory
     public virtual void UpdateQuality()
     {
         var items = _itemProvider.GetItems().ToArray();
-        var itemTypeDictionary = new ItemTypeDictionary();
 
         foreach (var item in items)
         {       
-            Type itemType = itemTypeDictionary.ItemTypes[item.Name];
+            Type itemType = _itemDictionary.ItemTypes[item.Name];
             UpdatableItem updatableItem = new(item);
             var itemInstance = Activator.CreateInstance(itemType, updatableItem) as IUpdatableItem;
-
-            if ( itemInstance is not null )
-            {
-                itemInstance.Update();
-            }
+            itemInstance?.Update();
         }
     }
 }
