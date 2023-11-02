@@ -19,7 +19,7 @@ public class Inventory : IInventory
 
     public virtual void UpdateQuality()
     {
-        var items = _itemProvider.GetItems().ToArray();
+        var items = _itemProvider.GetItems();
 
         foreach (var item in items)
         {       
